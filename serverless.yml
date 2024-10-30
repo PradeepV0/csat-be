@@ -1,0 +1,86 @@
+service: my-service
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+environment:
+  DB_HOST: localhost
+  DB_USER: postgres
+  DB_PASSWORD: rootUser
+  DB_NAME: postgres
+
+functions:
+   createOrganization:
+    handler: handler.createOrganization
+    events:
+      - httpApi:
+          path: createOrganization
+          method: post
+          cors: true
+
+   getOrganizations:
+    handler: handler.getOrganizations
+    events:
+      - http:
+          path: organizations
+          method: get
+          cors: true
+  
+   getOrganization:
+    handler: handler.getOrganization
+    events:
+      - http:
+          path: organizations/{orgId}
+          method: get
+          cors: true
+
+   updateOrganization:
+    handler: handler.updateOrganization
+    events:
+      - http:
+          path: organizations/{id}
+          method: put
+          cors: true
+
+   deleteOrganization:
+    handler: handler.deleteOrganization
+    events:
+      - http:
+          path: organizations/{id}
+          method: delete
+          cors: true
+    
+   createContactPerson:
+    handler: handler.createContactPerson
+    events:
+      - httpApi:
+          path: createContactPerson
+          method: post
+          cors: true
+    
+   getContactPersons:
+    handler: handler.getContactPersons
+    events:
+      - http:
+          path: getContactPersons
+          method: get
+          cors: true
+
+   createSurveyDetails:
+    handler: handler.createSurveyDetails
+    events:
+      - httpApi:
+          path: createSurveyDetails
+          method: post
+          cors: true
+
+   getSurveyDetails:
+    handler: handler.getSurveyDetails
+    events:
+      - http:
+          path: getSurveyDetails
+          method: get
+          cors: true
+plugins:
+  - serverless-offline
+
